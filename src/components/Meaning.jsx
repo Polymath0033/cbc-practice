@@ -7,20 +7,22 @@ class Meaning extends Component {
   render() {
     return (
       <>
-        <h3 className="font-normal text-2xl relative after:content-[' '] after:absolute after:w-full after:h-[1px] after:left-0 after:top-[18.5px] after:bg-grey-light after:dark:bg-grey-dark  ">
+        <h3 className="font-normal text-lg sm:text-2xl relative after:content-[' '] after:absolute after:w-full after:h-[1px] after:left-0 after:top-[18.5px] after:bg-grey-light after:dark:bg-grey-dark  ">
           <span className="relative bg-white dark:bg-dark-bg text-text-light dark:text-white pr-5 z-30">
             {this.props.data.partOfSpeech}
           </span>
         </h3>
         <div>
-          <h4 className="text-grey text-xl font-normal mb-4">Meaning</h4>
+          <h4 className="text-grey text-base sm:text-xl font-normal mb-4">
+            Meaning
+          </h4>
           <ul className="text-text-light flex flex-col  gap-3 ml-4 dark:text-white">
             {this.props.data.definitions.map((definition, index) => (
               <li className="flex gap-4" key={index}>
                 <span className="text-purple">•</span>
                 <div className="flex  flex-col gap-3">
                   <p>{definition?.definition}</p>
-                  <p className="text-lg font-normal text-grey !leading-6">
+                  <p className="text-[15px] sm:text-lg font-normal text-grey !leading-6">
                     {definition?.example}
                   </p>
                 </div>
@@ -30,12 +32,15 @@ class Meaning extends Component {
         </div>
         {this.props.data.synonyms.length >= 1 && (
           <div className="flex gap-3">
-            <h5 className="text-grey font-normal text-xl">Synonyms</h5>
-            <ul className="flex gap-2 flex-wrap text-purple font-bold text-xl">
+            <h5 className="text-grey font-normal text-base sm:text-xl">
+              Synonyms
+            </h5>
+            <ul className="flex gap-2 flex-wrap text-purple font-bold text-base sm:text-xl">
               {this.props.data.synonyms.map((synonym) => (
                 <li
                   key={synonym}
-                  className={` after:content-[',']  last-of-type:after:content-[""] `}
+                  onClick={this.props.searchHandler.bind(this, synonym)}
+                  className={` after:content-[','] cursor-pointer  last-of-type:after:content-[""] `}
                 >
                   {synonym}
                 </li>
@@ -48,7 +53,11 @@ class Meaning extends Component {
             <h5 className="text-grey font-normal text-xl">Antonyms</h5>
             <ul className="flex gap-2 flex-wrap text-purple font-bold text-xl">
               {this.props.data.antonyms.map((antonym) => (
-                <li key={antonym} className="after:content-[',']">
+                <li
+                  key={antonym}
+                  onClick={this.props.searchHandler.bind(this, antonym)}
+                  className={`after:content-[','] cursor-pointer  last-of-type:after:content-[""] `}
+                >
                   {antonym}
                 </li>
               ))}
@@ -71,5 +80,6 @@ Meaning.propTypes = {
     synonyms: PropTypes.arrayOf(PropTypes.string).isRequired,
     antonyms: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
+  searchHandler: PropTypes.func.isRequired,
 };
 export default Meaning;

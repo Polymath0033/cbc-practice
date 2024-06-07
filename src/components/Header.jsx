@@ -24,7 +24,7 @@ class Header extends Component {
   constructor() {
     super();
     this.state = {
-      font: { name: "Serif", id: "Inter" },
+      font: { name: "Sans Serif", id: "Inter" },
       dropdown: false,
       mode: getMode() === "dark" ? true : false,
     };
@@ -74,7 +74,7 @@ class Header extends Component {
       <header className="custom-container mx-auto w-[calc(100%_-_32px)] md:w-[737px] bg-white dark:bg-black flex items-center justify-between text-red-500">
         <img src={logo} alt="logo" className="w-8 h-8" />
         <div className="flex">
-          <div className="flex gap-2 text-lg pr-5 border-r border-[#E9E9E9] font-bold text-text-light dark:text-white relative items-center">
+          <div className="flex gap-2 text-sm md:text-lg pr-5 border-r border-[#E9E9E9] font-bold text-text-light dark:text-white relative items-center">
             <span
               onClick={this.handleDropdown.bind(this)}
               className="cursor-pointer"
@@ -98,7 +98,7 @@ class Header extends Component {
                 {fonts.map((font) => (
                   <li
                     key={font.id}
-                    className={` first-of-type:font-sans last-of-type:font-mono font-serif hover:text-purple cursor-pointer w-full  text-text-light dark:text-white text-lg leading-6`}
+                    className={` first-of-type:font-sans last-of-type:font-mono font-serif hover:text-purple cursor-pointer w-full  text-text-light dark:text-white text-base md:text-lg leading-6`}
                     onClick={this.handleFont.bind(this, font.name)}
                   >
                     {font.name}

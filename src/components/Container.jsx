@@ -68,14 +68,12 @@ class Container extends Component {
   render() {
     return (
       <>
-        {/* <div className="flex justify-center items-center w-full h-full">
-          <span className="loader"></span>
-        </div> */}
         <Search searchHandler={this.handleSearch} />
         <Main
           dictionary={this.state.dictionary}
           loading={this.state.loading}
           error={this.state.error}
+          searchHandler={this.handleSearch}
         />
       </>
     );

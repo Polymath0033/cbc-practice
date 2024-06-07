@@ -1,6 +1,7 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
 import searchIcon from "../assets/icon-search.svg";
+
 class Search extends Component {
   constructor(props) {
     super(props);
@@ -8,16 +9,21 @@ class Search extends Component {
       search: "keyboard",
       error: false,
     };
-    this.handleSearch = this.handleSearch.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  handleSearch(e) {
-    if (e.key === "Enter" && e.target.value === "") {
-      this.setState({ error: true, search: "" });
-      this.props.searchHandler(e.target.value);
-    } else if (e.key === "Enter") {
-      this.setState({ search: e.target.value, error: false });
-      this.props.searchHandler(e.target.value);
+  handleInputChange(e) {
+    this.setState({ search: e.target.value, error: false });
+  }
+
+  handleKeyDown(e) {
+    if (e.key === "Enter") {
+      if (this.state.search.trim() === "") {
+        this.setState({ error: true });
+      } else {
+        this.props.searchHandler(this.state.search.trim().toLowerCase());
+      }
     }
   }
 
@@ -27,10 +33,10 @@ class Search extends Component {
         <input
           type="search"
           placeholder="Search for any word…"
-          onKeyDown={this.handleSearch.bind(this)}
-          onChange={this.handleSearch.bind(this)}
-          // value={this.state.search}
-          className={`px-5 py-4 bg-[#F4F4F4] dark:bg-[#1F1F1F] text-text-light dark:text-white font-bold text-xl placeholder:opacity-25 rounded-2xl w-full outline-none focus:border focus:border-purple  transition-all duration-300 ease-in-out ${
+          onKeyDown={this.handleKeyDown}
+          onChange={this.handleInputChange}
+          value={this.state.search}
+          className={`px-4 md:px-5 py-3 md:py-4 bg-[#F4F4F4] dark:bg-[#1F1F1F] text-text-light dark:text-white font-bold text-base sm:text-xl placeholder:opacity-25 rounded-2xl w-full outline-none focus:border focus:border-purple transition-all duration-300 ease-in-out ${
             this.state.error && "!border-[#FF5252]"
           }`}
         />
@@ -46,7 +52,9 @@ class Search extends Component {
     );
   }
 }
+
 Search.propTypes = {
   searchHandler: PropTypes.func.isRequired,
 };
+
 export default Search;
